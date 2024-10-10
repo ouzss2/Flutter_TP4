@@ -1,19 +1,31 @@
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart'; 
 
 import 'SignInScreen.dart';
-
+import 'Home.dart'; 
 
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
+    Future.delayed(Duration(seconds: 5), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false; 
 
-    Future.delayed(Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => SignInScreen()),
-      );
+      if (isLoggedIn) {
+       
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
+      } else {
+       
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SignInScreen()),
+        );
+      }
     });
 
     return Scaffold(

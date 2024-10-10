@@ -17,13 +17,12 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-
  
     String path = join(await getDatabasesPath(), 'user_database.db');
        print('Database path: $path');
     return await openDatabase(
       path,
-      version: 4,
+      version: 2,
       onCreate: (db, version) {
         return db.execute(
           'CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE, password TEXT)',

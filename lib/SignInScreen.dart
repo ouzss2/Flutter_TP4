@@ -1,4 +1,6 @@
+import 'package:e_commerce/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import for Shared Preferences
 
 import 'Database/DatabaseHelper.dart';
 import 'SignUpScreen.dart';
@@ -8,22 +10,27 @@ class SignInScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
- final DatabaseHelper _databaseHelper = DatabaseHelper(); 
+  final DatabaseHelper _databaseHelper = DatabaseHelper(); 
 
   void _signIn(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
 
-      
       final user = await _databaseHelper.getUser(email);
 
       if (user != null && user['password'] == password) {
+        // Save login status to Shared Preferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true); // Set the login status
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Sign In Successful!')),
         );
-
-       
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Home()),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Invalid email or password')),
@@ -37,7 +44,7 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign In'),
-        backgroundColor: Colors.teal, // Customize the app bar color
+        backgroundColor: Colors.teal, 
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -45,11 +52,10 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Add a logo or image here
               Container(
                 margin: EdgeInsets.only(bottom: 40),
                 child: Image.asset(
-                  'assets/images/logo.png', // Replace with your logo or image
+                  'assets/images/logo.png', 
                   height: 120,
                 ),
               ),
@@ -58,7 +64,7 @@ class SignInScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal, // Customize the text color
+                  color: Colors.teal, 
                 ),
               ),
               SizedBox(height: 10),
