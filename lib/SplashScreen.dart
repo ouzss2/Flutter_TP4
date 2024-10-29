@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    Future.delayed(Duration(seconds: 5), () async {
+    Future.delayed(Duration(seconds: 10), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false; 
 
