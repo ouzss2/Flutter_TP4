@@ -1,6 +1,6 @@
 import 'package:e_commerce/Home.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart'; // Import for Shared Preferences
+import 'package:shared_preferences/shared_preferences.dart'; 
 
 import 'Database/DatabaseHelper.dart';
 import 'SignUpScreen.dart';
@@ -20,9 +20,9 @@ class SignInScreen extends StatelessWidget {
       final user = await _databaseHelper.getUser(email);
 
       if (user != null && user['password'] == password) {
-        // Save login status to Shared Preferences
+       
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('isLoggedIn', true); // Set the login status
+        await prefs.setBool('isLoggedIn', true); 
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Sign In Successful!')),
@@ -88,7 +88,7 @@ class SignInScreen extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        prefixIcon: Icon(Icons.email), // Email icon
+                        prefixIcon: Icon(Icons.email), 
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty || !value.contains('@')) {
@@ -106,7 +106,7 @@ class SignInScreen extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        prefixIcon: Icon(Icons.lock), // Lock icon
+                        prefixIcon: Icon(Icons.lock), 
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -123,7 +123,7 @@ class SignInScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        backgroundColor: Colors.teal, // Customize the button color
+                        backgroundColor: Colors.teal, 
                       ),
                       child: Text(
                         'Sign In',
@@ -140,7 +140,7 @@ class SignInScreen extends StatelessWidget {
                       },
                       child: Text(
                         "Don't have an account? Sign Up",
-                        style: TextStyle(color: Colors.teal), // Text button color
+                        style: TextStyle(color: Colors.teal), 
                       ),
                     ),
                   ],

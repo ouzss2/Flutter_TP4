@@ -5,8 +5,6 @@ import 'package:e_commerce/Products/Products.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'Paypal/PaymentCancel.dart';
-import 'Paypal/PaymentSuccess.dart';
 import 'Products/CarProvider.dart';
 import 'SplashScreen.dart';
 
@@ -16,8 +14,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CarProvider()),
-        ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => CarProvider())
       ],
       child: MyApp(),
     ),
@@ -29,11 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'My Shop',
-      home: Home(),
-       routes: {
-        '/payment-success': (context) => PaymentSuccess(),
-        '/payment-cancel': (context) => PaymentCancel(),
-      },
+      home: Home()
     );
   }
 }

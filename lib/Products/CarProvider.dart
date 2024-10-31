@@ -34,7 +34,7 @@ class CarProvider with ChangeNotifier {
 
 
   Future<String> createPayPalPayment(double totalPrice) async {
-  print("createPayPalPayment called"); // Check if function is called
+  print("createPayPalPayment called"); 
 
   final String clientId = 'Aahp2jyCKh0OGomlDaRvAjQ7jhTnV6gM6VPAQTLOXKHzPWoTCTx2OUMPmTaBO-QAJIo37x0oQQ2dxFdm';
   final String secret = 'EGye1AITJ9_tjmkg3clHn4GGR8DG_VV3T9JAsQozc3tjek8mAb2mtw7JG9vBvUqQkEdBbBlxyYj-NLAn';
@@ -56,7 +56,7 @@ class CarProvider with ChangeNotifier {
     final accessToken = jsonDecode(response.body)['access_token'];
     print("Access token: $accessToken");
 
-    // Create a payment
+   
     final paymentResponse = await http.post(
       Uri.parse('https://api-m.sandbox.paypal.com/v1/payments/payment'),
       headers: {

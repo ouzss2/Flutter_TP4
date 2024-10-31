@@ -50,7 +50,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
                             textAlign: TextAlign.center,
                           ),
                         )
-                      : Container(); // Empty container if no items in cart
+                      : Container(); 
                 },
               ),
             ),
