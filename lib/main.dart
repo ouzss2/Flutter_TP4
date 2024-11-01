@@ -14,7 +14,8 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CarProvider())
+        ChangeNotifierProvider(create: (context) => CarProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: MyApp(),
     ),

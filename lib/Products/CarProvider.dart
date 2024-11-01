@@ -34,10 +34,10 @@ class CarProvider with ChangeNotifier {
 
 
   Future<String> createPayPalPayment(double totalPrice) async {
-  print("createPayPalPayment called"); 
+  /*print("createPayPalPayment called"); 
 
-  final String clientId = 'Aahp2jyCKh0OGomlDaRvAjQ7jhTnV6gM6VPAQTLOXKHzPWoTCTx2OUMPmTaBO-QAJIo37x0oQQ2dxFdm';
-  final String secret = 'EGye1AITJ9_tjmkg3clHn4GGR8DG_VV3T9JAsQozc3tjek8mAb2mtw7JG9vBvUqQkEdBbBlxyYj-NLAn';
+  final String clientId = 'AaHX4dw5LUfbG90Y8P3Y2H6D49mae2zoeQ-rXdWbnoG_Ka-GChe_AXSj9KkTn3IXECAACw5ctvKGoP8k';
+  final String secret = 'ECbjmoOR9vKExC8m7BncwJSDEbgKSlQ1Mqqd3DHPQ-e79G3EHWQJkMnkoq1t78Cpi8sC1AA1Es6o_zIw';
 
   final String credentials = base64Encode(utf8.encode('$clientId:$secret'));
   print("Encoded credentials: $credentials");
@@ -54,32 +54,41 @@ class CarProvider with ChangeNotifier {
   print("Access token response status: ${response.statusCode}");
   if (response.statusCode == 200) {
     final accessToken = jsonDecode(response.body)['access_token'];
-    print("Access token: $accessToken");
+    print("Access token: $accessToken");*/
 
-   
-    final paymentResponse = await http.post(
-      Uri.parse('https://api-m.sandbox.paypal.com/v1/payments/payment'),
-      headers: {
-        'Authorization': 'Bearer $accessToken',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({
-        "intent": "sale",
-        "redirect_urls": {
-          "return_url": "https://your-return-url.com",
-          "cancel_url": "https://your-cancel-url.com"
-        },
-        "payer": {"payment_method": "paypal"},
-        "transactions": [
-          {
-            "amount": {"total": totalPrice.toString(), "currency": "USD"},
-            "description": "Car Purchase"
-          }
-        ]
-      }),
-    );
+final paymentResponse = await http.post(
+  Uri.parse('https://api-m.sandbox.paypal.com/v1/payments/payment'),
+  headers: {
+    'Authorization': 'Bearer A21AALyXRb5gIkWe9ZR6OspYkN3SEOm5v8s2KzJ48ULsNJmLcJjOM_9268p3LT7GhMCuZjO7PMxSN2BwkfatHjSRMlnHUbe7Q',  
+    'Content-Type': 'application/json',
+  },
+  body: jsonEncode({
+    "intent": "sale",
+    "redirect_urls": {
+      "return_url": "https://your-return-url.com",
+      "cancel_url": "https://your-cancel-url.com"
+    },
+    "payer": {"payment_method": "paypal"},
+    "transactions": [
+      {
+        "amount": {"total": totalPrice.toString(), "currency": "USD"},
+        "description": "Car Purchase"
+      }
+    ]
+  }),
+);
 
-    print("Payment response status: ${paymentResponse.statusCode}");
+if (paymentResponse.statusCode == 201) {
+  final paymentData = jsonDecode(paymentResponse.body);
+  final approvalUrl = paymentData['links']
+      .firstWhere((link) => link['rel'] == 'approval_url')['href'];
+  print("Approval URL: $approvalUrl");
+} else {
+  print("Error creating payment: ${paymentResponse.body}");
+}
+
+
+    print("$totalPrice  response status: ${paymentResponse.statusCode}");
     if (paymentResponse.statusCode == 201) {
       final paymentData = jsonDecode(paymentResponse.body);
       final approvalUrl = paymentData['links']
@@ -90,11 +99,6 @@ class CarProvider with ChangeNotifier {
     } else {
       print("Failed to create PayPal payment: ${paymentResponse.body}");
       throw Exception('Failed to create PayPal payment');
-    }
-  } else {
-    print("Failed to obtain PayPal access token: ${response.body}");
-    throw Exception('Failed to obtain PayPal access token');
-  }
-}
+    }}
 
 }

@@ -7,7 +7,7 @@ class CartProvider with ChangeNotifier {
 
   void addItem(String item) {
     _cartItems.add(item);
-    notifyListeners(); // Notify listeners when there's a change
+    notifyListeners(); 
   }
 
   int get itemCount => _cartItems.length;

@@ -1,3 +1,4 @@
+import 'package:e_commerce/SignInScreen.dart';
 import 'package:flutter/material.dart';
 
 import 'Database/DatabaseHelper.dart';
@@ -26,6 +27,7 @@ class SignUpScreen extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Sign up successful!')),
         );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInScreen()));
 
       } catch (e) {
       
